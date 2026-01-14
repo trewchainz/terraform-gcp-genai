@@ -1,0 +1,59 @@
+steps:
+  # Terraform plan on PR
+  - name: 'hashicorp/terraform:1.5.0'
+    id: 'terraform-plan'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        terraform init
+        terraform plan -out=tfplan
+  
+  # Cost estimation (run after plan, before apply)
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: 'cost-estimate'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        terraform show -json tfplan | \
+        jq -r '.planned_values.root_module.resources[] | 
+          select(.type | startswith("google_")) | 
+          .type + "." + .name' | \
+        while read resource; do
+          echo "Estimated cost for $resource:"
+          # Add Infracost or similar here
+        done
+    waitFor: ['terraform-plan']
+        
+  # Security scanning
+  - name: 'aquasec/trivy:latest'
+    id: 'security-scan'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        trivy config .
+    waitFor: ['-']  # Run in parallel with other steps
+        
+  # Terraform apply on merge to main
+  - name: 'hashicorp/terraform:1.5.0'
+    id: 'terraform-apply'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        terraform init
+        terraform apply -auto-approve tfplan
+    waitFor: ['terraform-plan', 'cost-estimate', 'security-scan']
+        
+options:
+  logging: CLOUD_LOGGING_ONLY
+  
+substitutions:
+  _ENVIRONMENT: 'dev'
+  
+availableSecrets:
+  secretManager:
+    - versionName: projects/$PROJECT_ID/secrets/terraform-sa-key/versions/latest
+      env: 'GOOGLE_CREDENTIALS'

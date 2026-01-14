@@ -1,0 +1,15 @@
+project_id = "your-gcp-project-id"
+environment = "dev"
+application_name = "genai-app"
+
+# Update with your domain and users
+domain = "your-domain.com"
+allowed_iap_users = ["user1@your-domain.com", "user2@your-domain.com"]
+notification_email = "alerts@your-domain.com"
+
+# Budget settings
+budget_amount = 100
+
+# Network settings
+vpc_cidr = "10.0.0.0/16"
+enable_private_endpoints = true

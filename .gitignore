@@ -1,0 +1,91 @@
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Exclude all .tfvars files, which are likely to contain sensitive data
+*.tfvars
+*.tfvars.json
+
+# Ignore override files as they are usually used to override resources locally
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# But allow test mock providers
+!tests/mock_providers.tf
+
+# Ignore transient lock info files created by terraform apply
+.terraform.tfstate.lock.info
+
+# Include override files you do wish to add to version control using negation pattern
+# !example_override.tf
+
+# Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
+*tfplan*
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+
+# Ignore backup files
+*.bak
+*.backup
+*~
+
+# Ignore lock file (optional - some teams commit this)
+# .terraform.lock.hcl
+
+# OS-specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE-specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.settings/
+.classpath
+
+# Ignore test cache
+.terraform.test/
+
+# Ignore any local environment files
+.env
+.env.local
+.env.*.local
+
+# Ignore generated documentation
+*.md.backup
+
+# Ignore any credentials or keys
+*credentials*.json
+*key*.json
+*.pem
+*.key
+
+# Ignore Qodo AI cache
+.qodo/
+
+# Ignore function source archives (regenerate as needed)
+functions/*.zip
+
+# Ignore any local terraform variable files
+terraform.tfvars
+secrets.tfvars
+local.tfvars
