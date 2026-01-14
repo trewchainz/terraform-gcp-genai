@@ -17,11 +17,14 @@ A production-ready, security-focused GenAI application infrastructure using Terr
 5. **Audit Trail**: Cloud Logging to Google Security Operations (formerly Chronicle)
 
 ### Defense in Depth
-Layer 1: Prevention    → VPC-SC, IAP, CMEK
-Layer 2: Detection     → Google Security Operations
-Layer 3: Response      → Real-time Cloud Functions
-Layer 4: Investigation → Google Security Operations
-Layer 5: Compliance    → Audit logs preserved for 7 years
+
+| Layer | Function | Implementation |
+|-------|----------|----------------|
+| 1 | **Prevention** | VPC-SC, IAP, CMEK |
+| 2 | **Detection** | Google Security Operations |
+| 3 | **Response** | Real-time Cloud Functions |
+| 4 | **Investigation** | Google Security Operations |
+| 5 | **Compliance** | Audit logs preserved for 7 years |
 
 ### Security Architecture
 
